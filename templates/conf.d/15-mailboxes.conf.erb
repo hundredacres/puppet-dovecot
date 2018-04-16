@@ -5,7 +5,9 @@
 # NOTE: Assumes "namespace inbox" has been defined in 10-mail.conf.
 namespace inbox {
   inbox = yes
-
+  <% if @mailbox_inbox_prefix -%>
+  prefix = <%= @mailbox_inbox_prefix -%>
+  <%- end %>
   #mailbox name {
     # auto=create will automatically create this mailbox.
     # auto=subscribe will both create and subscribe to the mailbox.

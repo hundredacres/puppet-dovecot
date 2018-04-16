@@ -102,6 +102,7 @@ class dovecot (
     $sieve                      = '~/.dovecot.sieve',
     $sieve_after                = undef,
     $sieve_before               = undef,
+    $sieve_plugins              = undef,
     $sieve_dir                  = '~/sieve',
     $sieve_max_actions          = undef,
     $sieve_max_redirects        = undef,
@@ -138,6 +139,7 @@ class dovecot (
     $replication_enabled         = false,
     $shared_mailboxes            = false,
     $options_plugins             = {},
+    $mailbox_inbox_prefix        = undef,
 ) {
 
     validate_array($plugins)
@@ -234,10 +236,10 @@ class dovecot (
     }
 
     case $::operatingsystem {
-    'RedHat', 'CentOS': { 
+    'RedHat', 'CentOS': {
         $directory = '/etc/dovecot'
         $prefix    = 'dovecot'
-    } 
+    }
     /^(Debian|Ubuntu)$/:{
         $directory = '/etc/dovecot'
         $prefix    = 'dovecot'
@@ -326,13 +328,13 @@ class dovecot (
     file { "${directory}/conf.d/20-pop3.conf":
         content => template('dovecot/conf.d/20-pop3.conf.erb'),
     }
-    
+
     if $manage_sieve {
       file { "${directory}/conf.d/20-managesieve.conf":
           content => template('dovecot/conf.d/20-managesieve.conf.erb'),
       }
     }
-    
+
     file { "${directory}/conf.d/90-sieve.conf":
         content => template('dovecot/conf.d/90-sieve.conf.erb'),
     }
@@ -363,4 +365,3 @@ class dovecot (
         content => template('dovecot/conf.d/auth-ldap.conf.ext.erb'),
     }
 }
-
