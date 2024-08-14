@@ -126,8 +126,8 @@ class dovecot (
   $auth_ldap_userdb_static    = undef,
   $auth_master_separator      = '*',
   $mail_max_userip_connections = 512,
-  Boolean $first_valid_uid             = false,
-  Boolean $last_valid_uid              = false,
+  Integer $first_valid_uid             = 0,
+  Integer $last_valid_uid              = 0,
 
   Boolean $manage_service              = true,
   $custom_packages             = undef,
