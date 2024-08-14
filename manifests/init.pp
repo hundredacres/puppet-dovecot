@@ -97,7 +97,7 @@ class dovecot (
   # 20-managesieve.conf
   Optional[Boolean] $manage_sieve               = undef,
   Boolean $managesieve_service         = false,
-  $managesieve_service_count   = 0,
+  Integer $managesieve_service_count   = 0,
   # 90-sieve.conf
   String $sieve                      = '~/.dovecot.sieve',
   $sieve_after                = undef,
@@ -141,33 +141,6 @@ class dovecot (
   $options_plugins             = {},
   $mailbox_inbox_prefix        = undef,
 ) {
-  # dovecot.conf
-  # 10-auth.conf
-  # 10-mail.conf
-  # 10-master.conf
-
-
-  validate_integer($imaplogin_imap_port)
-  validate_integer($imaplogin_imaps_port)
-
-  # 10-ssl.conf
-
-  # 15-lda.conf
-
-  # 20-lmtp.conf
-
-  # 20-managesieve.conf
-  validate_integer($managesieve_service_count)
-  # 90-sieve.conf
-
-  #Plugins
-
-
-  validate_bool($quota_enabled)
-  validate_bool($acl_enabled)
-  validate_bool($shared_mailboxes)
-  validate_bool($replication_enabled)
-
   validate_hash($options_plugins)
   if($replication_enabled) {
     validate_hash($options_plugins[replication])
