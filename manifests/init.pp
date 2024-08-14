@@ -41,9 +41,9 @@ class dovecot (
   # 10-master.conf
   Optional[String] $default_process_limit      = undef,
   Optional[String] $default_client_limit       = undef,
-  $auth_listener_userdb_mode   = undef,
-  $auth_listener_userdb_user   = undef,
-  $auth_listener_userdb_group  = undef,
+  Optional[String] $auth_listener_userdb_mode   = undef,
+  Optional[String] $auth_listener_userdb_user   = undef,
+  Optional[String] $auth_listener_userdb_group  = undef,
   Boolean $auth_listener_postfix       = false,
   Optional[String] $auth_listener_postfix_mode  = undef,
   Optional[String] $auth_listener_postfix_user  = undef,
@@ -60,35 +60,35 @@ class dovecot (
   Stdlib::Port $imaplogin_imap_port         = -1,
   Stdlib::Port $imaplogin_imaps_port        = -1,
   Boolean $imaplogin_imaps_ssl         = false,
-  $lmtp_unix_listener          = undef,
-  $lmtp_unix_listener_mode     = undef,
-  $lmtp_unix_listener_user     = undef,
-  $lmtp_unix_listener_group    = undef,
+  Optional[String] $lmtp_unix_listener          = undef,
+  Optional[String] $lmtp_unix_listener_mode     = undef,
+  Optional[String] $lmtp_unix_listener_user     = undef,
+  Optional[String] $lmtp_unix_listener_group    = undef,
   $lmtp_socket_group          = undef,
   $lmtp_socket_mode           = undef,
   $lmtp_socket_path           = undef,
   $lmtp_socket_user           = undef,
   # 10-ssl.conf
-  $ssl                        = undef,
-  $ssl_cert                   = '/etc/pki/dovecot/certs/dovecot.pem',
-  $ssl_key                    = '/etc/pki/dovecot/private/dovecot.pem',
+  Optional[String] $ssl                        = undef,
+  String $ssl_cert                   = '/etc/pki/dovecot/certs/dovecot.pem',
+  String $ssl_key                    = '/etc/pki/dovecot/private/dovecot.pem',
   $ssl_cipher_list            = undef,
   $ssl_protocols              = undef,
   $ssl_dh_parameters_length   = undef,
   # 15-lda.conf
-  $postmaster_address         = undef,
-  $hostname                   = undef,
-  $lda_mail_plugins           = undef,
+  Optional[String] $postmaster_address         = undef,
+  Optional[String] $hostname                   = undef,
+  Optional[String] $lda_mail_plugins           = undef,
   $lda_mail_location          = undef,
   $lda_mailbox_autocreate     = undef,
   $lda_mailbox_autosubscribe  = undef,
   # 20-imap.conf
   $imap_listen_port            = '*:143',
   $imaps_listen_port           = '*:993',
-  $imap_mail_plugins          = undef,
+  Optional[String] $imap_mail_plugins          = undef,
   $imap_client_workarounds    = undef,
   # 20-lmtp.conf
-  $lmtp_mail_plugins          = undef,
+  Optional[String] $lmtp_mail_plugins          = undef,
   $lmtp_save_to_detail_mailbox = undef,
   # 20-pop3.conf
   $pop3_mail_plugins          = undef,
@@ -133,7 +133,7 @@ class dovecot (
   $custom_packages             = undef,
   $ensure_packages             = 'installed',
 
-  $ldap_uris                   = undef,
+  Optional[String] $ldap_uris                   = undef,
   Boolean $quota_enabled               = false,
   Boolean $acl_enabled                 = false,
   Boolean $replication_enabled         = false,
@@ -142,61 +142,31 @@ class dovecot (
   $mailbox_inbox_prefix        = undef,
 ) {
   # dovecot.conf
-  validate_string($protocols)
-  validate_string($listen)
-  validate_string($login_greeting)
-  validate_string($login_trusted_networks)
   # 10-auth.conf
   validate_bool($disable_plaintext_auth)
-  validate_string($auth_username_chars)
-  validate_string($auth_mechanisms)
   # 10-mail.conf
-  validate_string($mail_home)
-  validate_string($mail_location)
-  validate_string($mail_uid)
-  validate_string($mail_gid)
-  validate_string($mail_plugins)
   # 10-master.conf
-  validate_string($default_process_limit)
-  validate_string($default_client_limit)
-  validate_string($auth_master_separator)
-  validate_string($auth_listener_userdb_mode)
-  validate_string($auth_listener_userdb_user)
-  validate_string($auth_listener_userdb_group)
+
   validate_bool($auth_listener_postfix)
-  validate_string($auth_listener_postfix_mode)
-  validate_string($auth_listener_postfix_user)
-  validate_string($auth_listener_postfix_group)
+
   validate_integer($imaplogin_imap_port)
   validate_integer($imaplogin_imaps_port)
   validate_bool($imaplogin_imaps_ssl)
-  validate_string($lmtp_unix_listener)
-  validate_string($lmtp_unix_listener_mode)
-  validate_string($lmtp_unix_listener_user)
-  validate_string($lmtp_unix_listener_group)
+
   # 10-ssl.conf
-  validate_string($ssl)
-  validate_string($ssl_cert)
-  validate_string($ssl_key)
-  validate_string($ssl_key)
+
   # 15-lda.conf
-  validate_string($postmaster_address)
-  validate_string($hostname)
-  validate_string($lda_mail_plugins)
-  validate_string($imap_mail_plugins)
+
   # 20-lmtp.conf
   validate_bool($lmtp_save_to_detail_mailbox)
-  validate_string($lmtp_mail_plugins)
+
   # 20-managesieve.conf
   validate_bool($managesieve_service)
   validate_integer($managesieve_service_count)
   # 90-sieve.conf
-  validate_string($sieve)
-  validate_string($sieve_dir)
-  validate_string($sieve_extensions)
-  validate_string($recipient_delimiter)
+
   #Plugins
-  validate_string($ldap_uris)
+
 
   validate_bool($quota_enabled)
   validate_bool($acl_enabled)
