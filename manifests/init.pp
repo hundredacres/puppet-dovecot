@@ -89,7 +89,7 @@ class dovecot (
   $imap_client_workarounds    = undef,
   # 20-lmtp.conf
   Optional[String] $lmtp_mail_plugins          = undef,
-  $lmtp_save_to_detail_mailbox = undef,
+  Optional[Boolean] $lmtp_save_to_detail_mailbox = undef,
   # 20-pop3.conf
   $pop3_mail_plugins          = undef,
   $pop3_uidl_format           = undef,
@@ -143,25 +143,20 @@ class dovecot (
 ) {
   # dovecot.conf
   # 10-auth.conf
-  validate_bool($disable_plaintext_auth)
   # 10-mail.conf
   # 10-master.conf
 
-  validate_bool($auth_listener_postfix)
 
   validate_integer($imaplogin_imap_port)
   validate_integer($imaplogin_imaps_port)
-  validate_bool($imaplogin_imaps_ssl)
 
   # 10-ssl.conf
 
   # 15-lda.conf
 
   # 20-lmtp.conf
-  validate_bool($lmtp_save_to_detail_mailbox)
 
   # 20-managesieve.conf
-  validate_bool($managesieve_service)
   validate_integer($managesieve_service_count)
   # 90-sieve.conf
 
