@@ -138,10 +138,9 @@ class dovecot (
   Boolean $acl_enabled                 = false,
   Boolean $replication_enabled         = false,
   Boolean $shared_mailboxes            = false,
-  $options_plugins             = {},
+  Hash $options_plugins             = {},
   $mailbox_inbox_prefix        = undef,
 ) {
-  validate_hash($options_plugins)
   if($replication_enabled) {
     validate_hash($options_plugins[replication])
     validate_string($options_plugins[replication][mail_replica])
