@@ -150,7 +150,7 @@ class dovecot (
   }
 
   if $custom_packages == undef {
-    case $::osfamily {
+    case $facts['os']['family'] {
       'RedHat', 'CentOS': {
         $packages = ['dovecot','dovecot-pigeonhole']
       }
@@ -160,14 +160,14 @@ class dovecot (
       'FreeBSD' : {
         $packages  = 'mail/dovecot2'
       }
-      default: { fail("OS ${::operatingsystem} and version ${::operatingsystemrelease} is not supported.")
+      default: { fail("OS ${facts['operatingsystem']} and version ${operatingsystemrelease} is not supported.")
       }
     }
   } else {
     $packages = $custom_packages
   }
 
-  case $::operatingsystem {
+  case $facts['os']['family'] {
     'RedHat', 'CentOS': {
       $directory = '/etc/dovecot'
       $prefix    = 'dovecot'
